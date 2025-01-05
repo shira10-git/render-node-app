@@ -1,32 +1,29 @@
-// app.js
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const RENDER_API_KEY = process.env.RENDER_API_KEY;
+const RENDER_API_URL = 'https://api.render.com/v1/services';
 
-// Render API Key - מומלץ לשמור כ-Environment Variable
-const RENDER_API_KEY = process.env.RENDER_API_KEY || 'your_render_api_key_here';
+app.use(cors());
 
-// הגדרת ה-Endpoint
 app.get('/services', async (req, res) => {
-  try {
-    // שליחת בקשה ל-Render API
-    const response = await axios.get('https://api.render.com/v1/services', {
-      headers: {
-        Authorization: `Bearer ${RENDER_API_KEY}`
-      }
-    });
-
-    // שליחת התגובה ללקוח
-    res.json(response.data);
-} catch (error) {
-    console.error('Error fetching services:', error);
-    res.status(500).json({ error: 'Failed to fetch services' });
-  }
+    try {
+        const response = await axios.get(RENDER_API_URL, {
+            headers: {
+                Authorization: `Bearer ${RENDER_API_KEY}`,
+            },
+        });
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error fetching services:', error.message);
+        res.status(500).json({ error: 'Failed to fetch services.' });
+    }
 });
 
-// הפעלת השרת
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
