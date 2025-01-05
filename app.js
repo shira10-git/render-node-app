@@ -10,7 +10,7 @@ const RENDER_API_URL = 'https://api.render.com/v1/services';
 
 app.use(cors());
 
-app.get('/services', async (req, res) => {
+app.get('/', async (req, res) => {
     try {
         const response = await axios.get(RENDER_API_URL, {
             headers: {
