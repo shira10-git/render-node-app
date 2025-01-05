@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const RENDER_API_KEY = process.env.RENDER_API_KEY;
 const RENDER_API_URL = 'https://api.render.com/v1/services';
-
+const a=1;
 app.use(cors());
 
 app.get('/', async (req, res) => {
